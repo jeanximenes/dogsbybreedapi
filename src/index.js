@@ -1,8 +1,7 @@
-import './index.css';
-
-const React = require('react');
-const ReactDom = require('react-dom');
-const axios = require('axios');
+import React from 'react'
+import ReactDom from 'react-dom'
+import './index.css'
+const axios = require('axios')
 
 class DogsBreed extends React.Component {
   constructor(){
@@ -22,16 +21,16 @@ class DogsBreed extends React.Component {
       .then(response => {
         this.setState({
           imgURL: response.data.message
-        });
+        })
         console.log(response.data.message)
       })
-      .catch(err => {
-        console.log("error fetching image");
-      });
-  };
+      .catch(e => {
+        console.log("error fetching image")
+      })
+  }
 
   getBreed = () => {
-    const {breed} = this.state;
+    const {breed} = this.state
     axios
       .get("https://dog.ceo/api/breeds/list")
       .then(response => {
@@ -39,30 +38,29 @@ class DogsBreed extends React.Component {
           breed: breed.concat(response.data.message)
         })
       })
-      .catch(err => {
-        console.log("error fetching list");
-      });
+      .catch(e => {
+        console.log("error fetching list")
+      })
   }
 
   getRandomPicture = () => {
-    const { breed } = this.state;
-    const randomDog = Math.floor(Math.random()*breed.length);
-    const choice = (randomDog === 0 ? "wolfhound" : breed[randomDog]);
-    console.log(randomDog);
-    let url = "https://dog.ceo/api/breed/" + choice + "/images/random"
+    const { breed } = this.state
+    const randomDog = Math.floor(Math.random()*breed.length)
+    const choice = (randomDog === 0 ? "wolfhound" : breed[randomDog])
+    let url = "https://dog.ceo/api/breeds/image/random"
     axios
       .get(url)
       .then(response => {
         this.setState({
           imgURL: response.data.message,
           select: choice
-        });
+        })
       })
-      .catch(err => {
-        console.log("error fetching image");
-      });
-      console.log(url);
-  };
+      .catch(e => {
+        console.log("error fetching image")
+      })
+      console.log(url)
+  }
 
   handleSelect = (e) => {
     this.setState({
@@ -71,15 +69,15 @@ class DogsBreed extends React.Component {
   }
 
   componentDidMount() {
-    this.getBreed();
+    this.getBreed()
+    this.getRandomPicture()
   }
 
   render() {
-    
-    const { breed, imgURL, select} = this.state;
-    
+    const { breed, imgURL, select} = this.state
     return(
       <div className="main">
+        
         <h1>Dogs by Breed</h1>
         <div class="content">
           <div>
